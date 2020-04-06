@@ -8,10 +8,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'My Shop',
       theme: ThemeData(
-        primarySwatch: Colors.teal,
-        accentColor: Colors.tealAccent,
+        primarySwatch: Colors.pink,
+        accentColor: Colors.white38,
         fontFamily: 'Lato',
       ),
 
