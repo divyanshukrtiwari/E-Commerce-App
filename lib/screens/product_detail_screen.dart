@@ -33,25 +33,53 @@ class ProductDeatilScreen extends StatelessWidget {
             SizedBox(
               height: 5,
             ),
-            Text(
-              '\u20B9 ${loadedProduct.price}',
-              style: TextStyle(
-                color: Colors.grey,
-                fontSize: 20,
+            Card(
+              margin: EdgeInsets.all(5),
+              elevation: 10,
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          loadedProduct.title,
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                        ),
+                        Text(
+                          '\u20B9 ${loadedProduct.price}',
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Divider(
+                    thickness: 2,
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 15,
+                      vertical: 15,
+                    ),
+                    width: double.infinity,
+                    child: Text(
+                      loadedProduct.description,
+                      textAlign: TextAlign.start,
+                      softWrap: true,
+                      style: TextStyle(
+                        fontSize: 16
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-            SizedBox(
-              height: 5,
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              width: double.infinity,
-              child: Text(
-                loadedProduct.description,
-                textAlign: TextAlign.center,
-                softWrap: true,
-              ),
-            )
           ],
         ),
       ),
