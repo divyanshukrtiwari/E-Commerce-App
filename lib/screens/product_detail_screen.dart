@@ -35,11 +35,11 @@ class ProductDeatilScreen extends StatelessWidget {
             ),
             Card(
               margin: EdgeInsets.all(5),
-              elevation: 10,
+              elevation: 2,
               child: Column(
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.all(15.0),
+                    padding: const EdgeInsets.all(20.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
@@ -59,13 +59,11 @@ class ProductDeatilScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Divider(
-                    thickness: 2,
-                  ),
+                  Divider(),
                   Container(
                     padding: EdgeInsets.symmetric(
                       horizontal: 15,
-                      vertical: 15,
+                      vertical: 20,
                     ),
                     width: double.infinity,
                     child: Text(
