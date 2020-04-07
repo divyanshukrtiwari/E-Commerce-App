@@ -35,7 +35,7 @@ class CartScreen extends StatelessWidget {
                     label: Text(
                       '\u20B9 ${cart.totalAmount}',
                     ),
-                    backgroundColor: Theme.of(context).primaryColor,
+                    backgroundColor: Theme.of(context).primaryColorLight,
                   ),
                 ],
               ),
