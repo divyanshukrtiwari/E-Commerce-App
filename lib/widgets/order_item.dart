@@ -38,7 +38,8 @@ class _OrderItemState extends State<OrderItem> {
           ),
           if (_expanded)
             Container(
-              height: min(widget.orders.products.length * 20.0 + 100, 180),
+              padding: EdgeInsets.symmetric(horizontal: 15,vertical: 8),
+              height: min(widget.orders.products.length * 20.0 + 20, 150),
               child: ListView(
                 children: widget.orders.products
                     .map(
@@ -49,6 +50,7 @@ class _OrderItemState extends State<OrderItem> {
                             prod.title,
                             style: TextStyle(
                               fontSize: 16,
+                              color: Colors.black87
                             ),
                           ),
                           Text(
