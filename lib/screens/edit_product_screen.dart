@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../providers/product.dart';
+
 class EditProductScreen extends StatefulWidget {
   static const routeName = '/edit-product-screen';
   @override
@@ -11,6 +13,15 @@ class _EditProductScreenState extends State<EditProductScreen> {
   final _decriptionFocusNode = FocusNode();
   final _imageurlController = TextEditingController();
   final _imageurlFocusNode = FocusNode();
+  var _editproduct = Product(
+    id: null,
+    title: '',
+    price: 0,
+    description: '',
+    imageUrl: '',
+  );
+
+  final _form = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -30,10 +41,14 @@ class _EditProductScreenState extends State<EditProductScreen> {
     super.dispose();
   }
 
-  void _updateImageUrl(){
-    if(!_imageurlFocusNode.hasFocus){
+  void _updateImageUrl() {
+    if (!_imageurlFocusNode.hasFocus) {
       setState(() {});
     }
+  }
+
+  void _saveForm() {
+    _form.currentState.save();
   }
 
   @override
@@ -41,10 +56,17 @@ class _EditProductScreenState extends State<EditProductScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Edit Product'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.save),
+            onPressed: _saveForm,
+          )
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
+          key: _form,
           child: ListView(
             children: <Widget>[
               TextFormField(
@@ -106,6 +128,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       textInputAction: TextInputAction.done,
                       controller: _imageurlController,
                       focusNode: _imageurlFocusNode,
+                      onFieldSubmitted: (_) {
+                        _saveForm();
+                      },
                     ),
                   ),
                 ],
