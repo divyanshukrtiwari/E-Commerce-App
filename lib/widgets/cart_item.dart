@@ -38,26 +38,25 @@ class CartItem extends StatelessWidget {
       ),
       child: Card(
         margin: EdgeInsets.symmetric(
-          horizontal: 10,
+          horizontal: 6,
           vertical: 4,
         ),
         child: Padding(
           padding: EdgeInsets.all(4),
           child: ListTile(
             leading: CircleAvatar(
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: FittedBox(
-                  child: Text(
-                    '\u20B9 $price',
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              ),
-              radius: 35,
-              backgroundColor: Theme.of(context).primaryColorLight,
+              backgroundImage: NetworkImage(imageUrl),
+              // child: Padding(
+              //   padding: const EdgeInsets.all(10.0),
+              //   child: FittedBox(
+              //     child: Text(
+              //       '\u20B9 $price',
+              //       style: TextStyle(
+              //         color: Colors.black,
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ),
             title: Text(title),
             subtitle: Text(
