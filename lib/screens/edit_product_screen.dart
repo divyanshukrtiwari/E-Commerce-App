@@ -48,6 +48,10 @@ class _EditProductScreenState extends State<EditProductScreen> {
   }
 
   void _saveForm() {
+    final isValid = _form.currentState.validate();
+    if(!isValid){
+      return;
+    }
     _form.currentState.save();
     print(_editProduct.imageUrl);
     print(_editProduct.title);
@@ -79,6 +83,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
+                validator: (val){
+                  if(val.isEmpty){
+                    return 'Enter a vaild Title';
+                  }
+                  return null;
+                },
                 textInputAction: TextInputAction.next,
                 onFieldSubmitted: (_) {
                   FocusScope.of(context).requestFocus(_priceFocusNode);
@@ -103,6 +113,18 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
+                validator: (val){
+                  if(val.isEmpty){
+                    return 'Enter a valid Price';
+                  }
+                  if(double.tryParse(val) == null){
+                    return 'Enter a valid Price';
+                  }
+                  if (double.parse(val) <= 0){
+                    return 'Enter a valid Price';
+                  }
+                  return null;
+                },
                 textInputAction: TextInputAction.next,
                 keyboardType: TextInputType.number,
                 focusNode: _priceFocusNode,
@@ -129,6 +151,15 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
+                validator: (val){
+                  if(val.isEmpty){
+                    return 'Enter a valid description';
+                  }
+                  if(val.length < 10){
+                    return 'Enter a valid description';
+                  }
+                  return null;
+                },
                 maxLines: 3,
                 keyboardType: TextInputType.multiline,
                 focusNode: _decriptionFocusNode,
@@ -182,6 +213,18 @@ class _EditProductScreenState extends State<EditProductScreen> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
+                      validator: (val){
+                        if(val.isEmpty){
+                          return 'Enter a valid Url';
+                        }
+                        if(!val.startsWith('http') &&  !val.startsWith('https')){
+                          return 'Enter a valid Url';
+                        }
+                        if(!val.endsWith('jpg') &&  !val.startsWith('jpeg') && !val.endsWith('png')){
+                          return 'Enter a valid Url';
+                        }
+                        return null;
+                      },
                       keyboardType: TextInputType.url,
                       textInputAction: TextInputAction.done,
                       controller: _imageurlController,
