@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../providers/product.dart';
+import '../providers/products.dart';
 
 class EditProductScreen extends StatefulWidget {
   static const routeName = '/edit-product-screen';
@@ -49,13 +51,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
 
   void _saveForm() {
     final isValid = _form.currentState.validate();
-    if(!isValid){
+    if (!isValid) {
       return;
     }
     _form.currentState.save();
-    print(_editProduct.imageUrl);
-    print(_editProduct.title);
-    print(_editProduct.price);
+    Provider.of<Products>(context, listen: false).addProduct(_editProduct);
+    Navigator.of(context).pop();
   }
 
   @override
@@ -83,8 +84,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                validator: (val){
-                  if(val.isEmpty){
+                validator: (val) {
+                  if (val.isEmpty) {
                     return 'Enter a vaild Title';
                   }
                   return null;
@@ -113,14 +114,14 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                validator: (val){
-                  if(val.isEmpty){
+                validator: (val) {
+                  if (val.isEmpty) {
                     return 'Enter a valid Price';
                   }
-                  if(double.tryParse(val) == null){
+                  if (double.tryParse(val) == null) {
                     return 'Enter a valid Price';
                   }
-                  if (double.parse(val) <= 0){
+                  if (double.parse(val) <= 0) {
                     return 'Enter a valid Price';
                   }
                   return null;
@@ -151,11 +152,11 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                validator: (val){
-                  if(val.isEmpty){
+                validator: (val) {
+                  if (val.isEmpty) {
                     return 'Enter a valid description';
                   }
-                  if(val.length < 10){
+                  if (val.length < 10) {
                     return 'Enter a valid description';
                   }
                   return null;
@@ -213,14 +214,17 @@ class _EditProductScreenState extends State<EditProductScreen> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-                      validator: (val){
-                        if(val.isEmpty){
+                      validator: (val) {
+                        if (val.isEmpty) {
                           return 'Enter a valid Url';
                         }
-                        if(!val.startsWith('http') &&  !val.startsWith('https')){
+                        if (!val.startsWith('http') &&
+                            !val.startsWith('https')) {
                           return 'Enter a valid Url';
                         }
-                        if(!val.endsWith('jpg') &&  !val.startsWith('jpeg') && !val.endsWith('png')){
+                        if (!val.endsWith('jpg') &&
+                            !val.startsWith('jpeg') &&
+                            !val.endsWith('png')) {
                           return 'Enter a valid Url';
                         }
                         return null;

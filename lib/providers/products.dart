@@ -47,16 +47,24 @@ class Products with ChangeNotifier {
     return [..._items];
   }
 
-  List<Product> get favouritesItem{
+  List<Product> get favouritesItem {
     return _items.where((prod) => prod.isFavourite).toList();
   }
 
-  Product fingById(String id){
+  Product fingById(String id) {
     return _items.firstWhere((prod) => prod.id == id);
   }
 
-  void addProduct() {
+  void addProduct(Product product) {
     //_items.add(value);
+    final newProduct = Product(
+      title: product.title,
+      description: product.description,
+      price: product.price,
+      imageUrl: product.imageUrl,
+      id: DateTime.now().toString(),
+    );
+    _items.add(newProduct);
     notifyListeners();
   }
 }
