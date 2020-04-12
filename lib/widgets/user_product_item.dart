@@ -9,10 +9,12 @@ class UserProductItem extends StatelessWidget {
   final String title;
   final String imageUrl;
 
-  UserProductItem(this.id ,this.title, this.imageUrl);
+  UserProductItem(this.id, this.title, this.imageUrl);
 
   @override
   Widget build(BuildContext context) {
+    final scaffold = Scaffold.of(context);
+    final theme = Theme.of(context);
     return Column(
       children: <Widget>[
         ListTile(
@@ -36,8 +38,20 @@ class UserProductItem extends StatelessWidget {
                 ),
                 IconButton(
                   icon: Icon(Icons.delete),
-                  onPressed: () {
-                    Provider.of<Products>(context, listen: false).deleteProduct(id);
+                  onPressed: () async {
+                    try {
+                      await Provider.of<Products>(context, listen: false)
+                          .deleteProduct(id);
+                    } catch (error) {
+                      scaffold.showSnackBar(SnackBar(
+                        content: Text(
+                          'Could not delete the Item!',
+                          textAlign: TextAlign.center,
+                        ),
+                        backgroundColor: theme.primaryColor,
+                        behavior: SnackBarBehavior.floating,
+                      ));
+                    }
                   },
                   color: Theme.of(context).primaryColor,
                 ),
