@@ -26,6 +26,32 @@ class Orders with ChangeNotifier {
     return [..._orders];
   }
 
+  Future<void> fetchOrders() async {
+    final url = 'https://my-shop-e4082.firebaseio.com/orders.json';
+    final response = await http.get(url);
+    final List<OrderItem> loadedOrders = [];
+    final extractedData = json.decode(response.body) as Map<String, dynamic>;
+    if(extractedData == null){
+      return;
+    }
+    extractedData.forEach((orderId, orderData) {
+      loadedOrders.add(OrderItem(
+        id: orderId,
+        price: orderData['price'],
+        dateTime: DateTime.parse(orderData['dateTime']),
+        products: (orderData['products'] as List<dynamic>).map((item) => CartItem(
+          id: item['id'],
+          price: item['price'],
+          quantity: item['quantity'],
+          title: item['title'],
+        )).toList(),
+      ));
+    });
+
+    _orders = loadedOrders.reversed.toList();
+    notifyListeners();
+  }
+
   Future<void> addOrder(List<CartItem> cartProducts, double total) async {
     final url = 'https://my-shop-e4082.firebaseio.com/orders.json';
     final timeStamp = DateTime.now();
@@ -34,13 +60,15 @@ class Orders with ChangeNotifier {
       body: json.encode({
         'price': total,
         'dateTime': timeStamp.toIso8601String(),
-        'products': cartProducts.map((cp) => {
-          'id': cp.id,
-          'title':cp.title,
-          'quantity':cp.quantity,
-          'price': cp.price,
-          'imageurl':cp.imageUrl,
-        }).toList(),
+        'products': cartProducts
+            .map((cp) => {
+                  'id': cp.id,
+                  'title': cp.title,
+                  'quantity': cp.quantity,
+                  'price': cp.price,
+                  'imageurl': cp.imageUrl,
+                })
+            .toList(),
       }),
     );
     _orders.insert(
