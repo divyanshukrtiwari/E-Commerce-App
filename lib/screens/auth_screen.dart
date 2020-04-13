@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/auth.dart';
+import '../models/http_exception.dart';
 
 enum AuthMode { Signup, Login }
 
@@ -113,7 +114,8 @@ class _AuthCardState extends State<AuthCard> {
     setState(() {
       _isLoading = true;
     });
-    if (_authMode == AuthMode.Login) {
+    try{
+      if (_authMode == AuthMode.Login) {
       // Log user in
       await Provider.of<Auth>(context, listen: false).Login(
         _authData['email'],
@@ -126,6 +128,21 @@ class _AuthCardState extends State<AuthCard> {
         _authData['password'],
       );
     }
+    } on HttpException catch (error) {
+      var errorMessage = 'Authentication failed!';
+      if(error.toString().contains('EMAIL_EXISTS')){
+        errorMessage = 'This email addres is already in use';
+      }
+      else if(error.toString().contains('INVALID_EMAIL')){
+        errorMessage = 'This is not a valid email addres';
+      }
+      else if(error.toString().contains('WEAK_PASSWORD')){
+        errorMessage = 'The password should be atleast 8 characters lpong';
+      }
+    } catch (error){
+      var errorMessage = 'Could not authenticate. Please try again';
+    }
+    
     setState(() {
       _isLoading = false;
     });
