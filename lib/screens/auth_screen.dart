@@ -1,6 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/auth.dart';
 
 enum AuthMode { Signup, Login }
 
@@ -47,7 +50,7 @@ class AuthScreen extends StatelessWidget {
                       // ..translate(-10.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: Theme.of(context).primaryColorDark,//Colors.deepOrange.shade900,
+                        color: Theme.of(context).primaryColor,//Colors.deepOrange.shade900,
                         boxShadow: [
                           BoxShadow(
                             blurRadius: 8,
@@ -100,7 +103,7 @@ class _AuthCardState extends State<AuthCard> {
   var _isLoading = false;
   final _passwordController = TextEditingController();
 
-  void _submit() {
+  Future<void> _submit() async {
     if (!_formKey.currentState.validate()) {
       // Invalid!
       return;
@@ -113,6 +116,7 @@ class _AuthCardState extends State<AuthCard> {
       // Log user in
     } else {
       // Sign user up
+      await Provider.of<Auth>(context, listen: false).Signup(_authData['email'], _authData['password'],);
     }
     setState(() {
       _isLoading = false;
@@ -192,7 +196,9 @@ class _AuthCardState extends State<AuthCard> {
                   height: 20,
                 ),
                 if (_isLoading)
-                  CircularProgressIndicator()
+                  CircularProgressIndicator(
+                    backgroundColor: Theme.of(context).primaryColor,
+                  )
                 else
                   RaisedButton(
                     child:
