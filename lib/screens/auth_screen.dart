@@ -46,11 +46,12 @@ class AuthScreen extends StatelessWidget {
                       padding:
                           EdgeInsets.symmetric(vertical: 8.0, horizontal: 94.0),
                       //transform: Matrix4.rotationZ(-8 * pi / 180)
-                        //..translate(-10.0),
+                      //..translate(-10.0),
                       // ..translate(-10.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: Theme.of(context).primaryColor,//Colors.deepOrange.shade900,
+                        color: Theme.of(context)
+                            .primaryColor, //Colors.deepOrange.shade900,
                         boxShadow: [
                           BoxShadow(
                             blurRadius: 8,
@@ -114,9 +115,16 @@ class _AuthCardState extends State<AuthCard> {
     });
     if (_authMode == AuthMode.Login) {
       // Log user in
+      await Provider.of<Auth>(context, listen: false).Login(
+        _authData['email'],
+        _authData['password'],
+      );
     } else {
       // Sign user up
-      await Provider.of<Auth>(context, listen: false).Signup(_authData['email'], _authData['password'],);
+      await Provider.of<Auth>(context, listen: false).Signup(
+        _authData['email'],
+        _authData['password'],
+      );
     }
     setState(() {
       _isLoading = false;
