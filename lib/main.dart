@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
             accentColor: Colors.white38,
             fontFamily: 'Lato',
           ),
-          home: auth.isAuth ? ProductDeatilScreen() :  AuthScreen(),
+          home: auth.isAuth ? ProductsOverviewScreen() :  AuthScreen(),
           routes: {
             ProductDeatilScreen.routeName: (ctx) => ProductDeatilScreen(),
             CartScreen.routeName: (ctx) => CartScreen(),
