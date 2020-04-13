@@ -105,6 +105,24 @@ class _AuthCardState extends State<AuthCard> {
   var _isLoading = false;
   final _passwordController = TextEditingController();
 
+  void _showErrorDialog(String error) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('Error Occured'),
+        content: Text(error),
+        actions: <Widget>[
+          FlatButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('Dismiss'),
+          ),
+        ],
+      ),
+    );
+  }
+
   Future<void> _submit() async {
     if (!_formKey.currentState.validate()) {
       // Invalid!
@@ -114,35 +132,37 @@ class _AuthCardState extends State<AuthCard> {
     setState(() {
       _isLoading = true;
     });
-    try{
+    try {
       if (_authMode == AuthMode.Login) {
-      // Log user in
-      await Provider.of<Auth>(context, listen: false).Login(
-        _authData['email'],
-        _authData['password'],
-      );
-    } else {
-      // Sign user up
-      await Provider.of<Auth>(context, listen: false).Signup(
-        _authData['email'],
-        _authData['password'],
-      );
-    }
+        // Log user in
+        await Provider.of<Auth>(context, listen: false).Login(
+          _authData['email'],
+          _authData['password'],
+        );
+      } else {
+        // Sign user up
+        await Provider.of<Auth>(context, listen: false).Signup(
+          _authData['email'],
+          _authData['password'],
+        );
+      }
     } on HttpException catch (error) {
       var errorMessage = 'Authentication failed!';
-      if(error.toString().contains('EMAIL_EXISTS')){
+      if (error.toString().contains('EMAIL_EXISTS')) {
         errorMessage = 'This email addres is already in use';
-      }
-      else if(error.toString().contains('INVALID_EMAIL')){
+      } else if (error.toString().contains('INVALID_EMAIL')) {
         errorMessage = 'This is not a valid email addres';
-      }
-      else if(error.toString().contains('WEAK_PASSWORD')){
+      } else if (error.toString().contains('WEAK_PASSWORD')) {
         errorMessage = 'The password should be atleast 8 characters lpong';
+      } else if (error.toString().contains('EMAIL_NOT_FOUND')) {
+        errorMessage = 'This email does not exist';
+      } else if (error.toString().contains('INVALID_PASSWORD')) {
+        errorMessage = 'Invalid Password';
       }
-    } catch (error){
-      var errorMessage = 'Could not authenticate. Please try again';
+    } catch (error) {
+      const errorMessage = 'Could not authenticate. Please try again';
     }
-    
+
     setState(() {
       _isLoading = false;
     });
