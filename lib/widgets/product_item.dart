@@ -11,7 +11,7 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(context, listen: false);
     final cart = Provider.of<Cart>(context, listen: false);
-    final authData = Provider.of<Auth>(context, listen:false);
+    final authData = Provider.of<Auth>(context, listen: false);
     return Consumer<Product>(
       builder: (context, product, child) => ClipRRect(
         borderRadius: BorderRadius.circular(10),
@@ -23,8 +23,9 @@ class ProductItem extends StatelessWidget {
                 arguments: product.id,
               );
             },
-            child: Image.network(
-              product.imageUrl,
+            child: FadeInImage(
+              placeholder: AssetImage('assets/images/download.jpeg'),
+              image: NetworkImage(product.imageUrl),
               fit: BoxFit.cover,
             ),
           ),
@@ -49,7 +50,8 @@ class ProductItem extends StatelessWidget {
                 color: Colors.pinkAccent,
               ),
               onPressed: () {
-                cart.addItem(product.id, product.price, product.title, product.imageUrl);
+                cart.addItem(
+                    product.id, product.price, product.title, product.imageUrl);
                 Scaffold.of(context).hideCurrentSnackBar();
                 Scaffold.of(context).showSnackBar(
                   SnackBar(
