@@ -26,7 +26,7 @@ class _OrderScreenState extends State<OrderScreen> {
   @override
   Widget build(BuildContext context) {
     final orderData = Provider.of<Orders>(context);
-    return Scaffold(
+    return  Scaffold(
       appBar: AppBar(
         title: Text(
           'Your Orders',
