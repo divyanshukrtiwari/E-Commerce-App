@@ -106,6 +106,7 @@ class Products with ChangeNotifier {
           'description': product.description,
           'imageurl': product.imageUrl,
           'price': product.price,
+          'creatorId': userId,
         }),
       );
       final newProduct = Product(
