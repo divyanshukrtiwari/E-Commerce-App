@@ -4,6 +4,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+
+
 import '../models/http_exception.dart';
 
 class Auth with ChangeNotifier {
@@ -83,7 +85,7 @@ class Auth with ChangeNotifier {
     }
     _token = extractedUserData['token'];
     _userId = extractedUserData['userId'];
-    _expiryDate = extractedUserData['expirydate'];
+    _expiryDate = expiryDate;
     notifyListeners();
     _autoLogOut();
     return true;
@@ -97,7 +99,7 @@ class Auth with ChangeNotifier {
     return _authenticate(email, password, 'signInWithPassword');
   }
 
-  void LogOut() {
+  Future<void> LogOut() async {
     _token = null;
     _userId = null;
     _expiryDate = null;
@@ -106,6 +108,8 @@ class Auth with ChangeNotifier {
       _authTimer = null;
     }
     notifyListeners();
+    final prefs = await SharedPreferences.getInstance();
+    prefs.clear();
   }
 
   void _autoLogOut() {
