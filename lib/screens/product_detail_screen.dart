@@ -25,9 +25,12 @@ class ProductDeatilScreen extends StatelessWidget {
             Container(
               height: 300,
               width: double.infinity,
-              child: Image.network(
-                loadedProduct.imageUrl,
-                fit: BoxFit.cover,
+              child: Hero(
+                tag: loadedProduct.id,
+                child: Image.network(
+                  loadedProduct.imageUrl,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             SizedBox(
@@ -70,9 +73,7 @@ class ProductDeatilScreen extends StatelessWidget {
                       loadedProduct.description,
                       textAlign: TextAlign.start,
                       softWrap: true,
-                      style: TextStyle(
-                        fontSize: 16
-                      ),
+                      style: TextStyle(fontSize: 16),
                     ),
                   ),
                 ],
