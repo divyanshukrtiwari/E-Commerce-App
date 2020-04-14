@@ -21,8 +21,8 @@ class Product with ChangeNotifier {
     this.isFavourite = false,
   });
 
-  void toggleFavouriteStatus() async {
-    final url = 'https://my-shop-e4082.firebaseio.com/products/$id.json';
+  void toggleFavouriteStatus(String token, String userId) async {
+    final url = 'https://my-shop-e4082.firebaseio.com/userFavourites/$userId/$id.json?auth=$token';
     final oldStatus = isFavourite;
     isFavourite = !isFavourite;
     notifyListeners();
@@ -35,6 +35,8 @@ class Product with ChangeNotifier {
       );
       if (response.statusCode >= 400) {
         isFavourite = oldStatus;
+        print(response.statusCode);
+        print(response.body);
         notifyListeners();
       }
     } catch (error) {
