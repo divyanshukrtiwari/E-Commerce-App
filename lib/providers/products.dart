@@ -65,7 +65,7 @@ class Products with ChangeNotifier {
   }
 
   Future<void> fetchProducts() async {
-    var url = 'https://my-shop-e4082.firebaseio.com/products.json?auth=$authToken';
+    var url = 'https://my-shop-e4082.firebaseio.com/products.json?auth=$authToken&orderBy="creatorId"&equalTo="$userId"';
     try {
       final response = await http.get(url);
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
