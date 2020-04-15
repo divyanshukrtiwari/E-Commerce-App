@@ -37,7 +37,7 @@ class ProductItem extends StatelessWidget {
               product.title,
               textAlign: TextAlign.center,
             ),
-            backgroundColor: Colors.black87,
+            backgroundColor: Colors.black38,
             leading: IconButton(
               icon: Icon(
                 product.isFavourite ? Icons.favorite : Icons.favorite_border,

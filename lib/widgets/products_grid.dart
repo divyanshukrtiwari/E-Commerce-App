@@ -28,7 +28,7 @@ class ProductsGrid extends StatelessWidget {
         value: products[index],
         child: Card(
           child: ProductItem(),
-          elevation: 10,
+          elevation: 8,
         ),
       ),
     );
