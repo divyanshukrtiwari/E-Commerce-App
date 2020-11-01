@@ -4,9 +4,10 @@ import 'package:provider/provider.dart';
 import '../widgets/app_drawer.dart';
 import '../screens/cart_screen.dart';
 import '../widgets/products_grid.dart';
-import '../widgets/badge.dart';
+// import '../widgets/badge.dart';
 import '../providers/cart.dart';
 import '../providers/products.dart';
+import 'package:badges/badges.dart';
 
 enum filterOptions {
   Favourites,
@@ -58,22 +59,6 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
           'My Shop',
         ),
         actions: <Widget>[
-          Consumer<Cart>(
-            builder: (ctx, cartData, child) => Badge(
-              child: child,
-              value: cartData.itemCount.toString(),
-            ),
-            child: IconButton(
-              icon: Icon(
-                Icons.shopping_cart,
-              ),
-              onPressed: () {
-                Navigator.of(context).pushNamed(
-                  CartScreen.routeName,
-                );
-              },
-            ),
-          ),
           PopupMenuButton(
             onSelected: (filterOptions selectedValue) {
               setState(
@@ -112,6 +97,31 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
               ),
             )
           : ProductsGrid(_showOnlyFavourites),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.pink,
+        child: Consumer<Cart>(
+          builder: (ctx, cartData, child) {
+            return Badge(
+              child: child,
+              badgeColor: Colors.white,
+              position: BadgePosition.topEnd(top: -15, end: -8),
+              badgeContent: Text(
+                cartData.itemCount.toString(),
+                style: TextStyle(color: Colors.pink),
+              ),
+            );
+          },
+          child: Icon(
+            Icons.shopping_cart,
+            color: Colors.white,
+          ),
+        ),
+        onPressed: () {
+          Navigator.of(context).pushNamed(
+            CartScreen.routeName,
+          );
+        },
+      ),
     );
   }
 }
