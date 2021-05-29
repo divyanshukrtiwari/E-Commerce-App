@@ -107,6 +107,17 @@ class _OrderButtonState extends State<OrderButton> {
               });
               //Navigator.of(context).pushNamed(OrderScreen.routename);
               widget.cart.clear();
+              Scaffold.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    'Order Placed',
+                    textAlign: TextAlign.center,
+                  ),
+                  duration: Duration(seconds: 2),
+                  behavior: SnackBarBehavior.floating,
+                  backgroundColor: Theme.of(context).primaryColor,
+                ),
+              );
             },
     );
   }

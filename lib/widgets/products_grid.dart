@@ -26,9 +26,18 @@ class ProductsGrid extends StatelessWidget {
       ),
       itemBuilder: (ctx, index) => ChangeNotifierProvider.value(
         value: products[index],
-        child: Card(
+        child: Container(
           child: ProductItem(),
-          elevation: 8,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(width: 0.1),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 10.0,
+              ),
+            ],
+          ),
         ),
       ),
     );
