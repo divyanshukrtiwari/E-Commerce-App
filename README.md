@@ -1,4 +1,4 @@
-# My Shop
+# E-Commerce
 
 A simple e-commerce mobile application.
 
